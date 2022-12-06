@@ -8,7 +8,7 @@ import lombok.*;
 
 @Data
 @ToString
-public class OrderCanceld extends AbstractEvent {
+public class OrderCanceled extends AbstractEvent {
 
     private Long id;
     private String foodId;
@@ -18,10 +18,10 @@ public class OrderCanceld extends AbstractEvent {
     private String customerId;
     private String storeId;
 
-    public OrderCanceld(Order aggregate){
+    public OrderCanceled(Order aggregate){
         super(aggregate);
     }
-    public OrderCanceld(){
+    public OrderCanceled(){
         super();
     }
 }

@@ -8,14 +8,14 @@ import lombok.*;
 
 @Data
 @ToString
-public class PointUsed extends AbstractEvent {
+public class PointSaved extends AbstractEvent {
 
     private Long id;
 
-    public PointUsed(Point aggregate){
+    public PointSaved(Point aggregate){
         super(aggregate);
     }
-    public PointUsed(){
+    public PointSaved(){
         super();
     }
 }
