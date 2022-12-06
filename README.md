@@ -1,97 +1,57 @@
-# 
 
-## Model
-www.msaez.io/#/storming/db73e689ee2977cc3cf4721dd4c8f1ef
+# food-delivery
 
-## Before Running Services
-### Make sure there is a Kafka server running
-```
-cd kafka
-docker-compose up
-```
-- Check the Kafka messages:
-```
-cd kafka
-docker-compose exec -it kafka /bin/bash
-cd /bin
-./kafka-console-consumer --bootstrap-server localhost:9092 --topic
-```
+### ** 서비스 시나리오**
 
-## Run the backend micro-services
-See the README.md files inside the each microservices directory:
+기능적 요구사항 
 
-- front
-- store
-- rider
-- point
-- customer
+1. 고객이 메뉴를 선택하여 주문한다.
+2. 고객이 선택한 메뉴에 대해 결제한다. 
+3. 고객이 결제하면 포인트를 적립한다. (추가)  
+4. 주문이 되면 주문 내역이 입점상점주인에게 주문정보가 전달된다. 
+5. 상점주는 주문을 수락하거나 거절할 수 있다. 
+6. 상점주는 요리시작때와 완료 시점에 시스템에 상태를 입력한다 
+7. 고객은 아직 요리가 시작되지 않은 주문은 취소할 수 있다  
+8. 고객이 결제 취소하면 포인트 적립도 취소 된다. (추가)
+9. 요리가 완료되면 고객의 지역 인근의 라이더들에 의해 배송건 조회가 가능하다
+10. 라이더가 해당 요리를 Pick한 후, 앱을 통해 통보한다. 
+11. 고객이 주문상태를 중간중간 조회한다
+12. 주문상태가 바뀔 때 마다 카톡으로 알림을 보낸다
+13. 고객이 요리를 배달 받으면 배송확인 버튼을 탭하여, 모든 거래가 완료된다
 
+비기능적 요구사항
 
-## Run API Gateway (Spring Gateway)
-```
-cd gateway
-mvn spring-boot:run
-```
+1. 장애격리
+- 상점관리 기능이 수행되지 않더라도 주문은 365일 24시간 받을 수 있어야 한다 Async (event-driven), Eventual Consistency
+- 결제시스템이 과중되면 사용자를 잠시동안 받지 않고 결제를 잠시후에 하도록 유도한다 Circuit breaker, fallback
 
-## Test by API
-- front
-```
- http :8088/orders id="id" foodId="foodId" options="options" address="address" qty="qty" customerId="customerId" storeId="storeId" 
- http :8088/payments id="id" orderId="orderId" amount="amount" status="status" 
-```
-- store
-```
- http :8088/foodCookings id="id" status="status" foodId="foodId" orderId="orderId" customId="customId" options="options" storeId="storeId" 
-```
-- rider
-```
- http :8088/deliveries id="id" status="status" orderId="orderId" address="address" 
-```
-- point
-```
- http :8088/points id="id" customerId="customerId" point="point" 
-```
-- customer
-```
-```
+2. 성능
+-  고객이 자주 상점관리에서 확인할 수 있는 배달상태를 주문시스템(프론트엔드)에서 확인할 수 있어야 한다 CQRS
+-  배달상태가 바뀔때마다 카톡 등으로 알림을 줄 수 있어야 한다 Event driven
+
+### ** 제약사항 ** 
+
+제시된 기능적 요구사항 중 2개 이상 수정(또는 추가) 하여 구현
+- 고객이 결제하면 포인트를 적립한다. (추가)  
+- 고객이 결제 취소하면 포인트 적립도 취소 된다. (추가)
+
+>
+>  Event Storming 결과
 
 
-## Run the frontend
-```
-cd frontend
-npm i
-npm run serve
-```
+### ** 체크포인트 **
+1. Saga(Pub/Sub)
 
-## Test by UI
-Open a browser to localhost:8088
+2. CQRS
 
-## Required Utilities
+3. Compensation / Correlation
 
-- httpie (alternative for curl / POSTMAN) and network utils
-```
-sudo apt-get update
-sudo apt-get install net-tools
-sudo apt install iputils-ping
-pip install httpie
-```
+4. Request / Response
 
-- kubernetes utilities (kubectl)
-```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
+5. Circuit Breaker
 
-- aws cli (aws)
-```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
+6. Gateway / Ingress
 
-- eksctl 
-```
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-```
+
+
 
