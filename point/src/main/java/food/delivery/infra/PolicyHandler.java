@@ -23,33 +23,33 @@ public class PolicyHandler{
     public void whatever(@Payload String eventString){}
 
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='Paid'")
-    public void wheneverPaid_UsePoint(@Payload Paid paid){
+    public void wheneverPaid_EarningPoints(@Payload Paid paid){
 
         Paid event = paid;
-        System.out.println("\n\n##### listener UsePoint : " + paid + "\n\n");
+        System.out.println("\n\n##### listener EarningPoints : " + paid + "\n\n");
 
 
         
 
         // Sample Logic //
-        Point.usePoint(event);
+        Point.earningPoints(event);
         
 
         
 
     }
 
-    @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='OrderCanceld'")
-    public void wheneverOrderCanceld_Compensate(@Payload OrderCanceld orderCanceld){
+    @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='OrderCanceled'")
+    public void wheneverOrderCanceled_CancellationOfEarningPoints(@Payload OrderCanceled orderCanceled){
 
-        OrderCanceld event = orderCanceld;
-        System.out.println("\n\n##### listener Compensate : " + orderCanceld + "\n\n");
+        OrderCanceled event = orderCanceled;
+        System.out.println("\n\n##### listener CancellationOfEarningPoints : " + orderCanceled + "\n\n");
 
 
         
 
         // Sample Logic //
-        Point.compensate(event);
+        Point.cancellationOfEarningPoints(event);
         
 
         
