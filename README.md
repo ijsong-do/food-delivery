@@ -28,10 +28,29 @@
 -  고객이 자주 상점관리에서 확인할 수 있는 배달상태를 주문시스템(프론트엔드)에서 확인할 수 있어야 한다 CQRS
 -  배달상태가 바뀔때마다 카톡 등으로 알림을 줄 수 있어야 한다 Event driven
 
-### ** 체크포인트 **
+### ** 제약사항 ** 
 
-분석설계
-Event Storming 결과
-MSAEz 로 모델링한 이벤트스토밍 결과:
-기능요구 
+제시된 기능적 요구사항 중 2개 이상 수정(또는 추가) 하여 구현
+- 고객이 결제하면 포인트를 적립한다. (추가)  
+- 고객이 결제 취소하면 포인트 적립도 취소 된다. (추가)
+
+>> Event Storming 결과
+
+
+### ** 체크포인트 **
+1. Saga(Pub/Sub)
+
+2. CQRS
+
+3. Compensation / Correlation
+
+4. Request / Response
+
+5. Circuit Breaker
+
+6. Gateway / Ingress
+
+
+
+
 
