@@ -1,7 +1,7 @@
 package food.delivery.domain;
 
 import food.delivery.domain.OrderPlaced;
-import food.delivery.domain.OrderCanceld;
+import food.delivery.domain.OrderCanceled;
 import food.delivery.FrontApplication;
 import javax.persistence.*;
 import java.util.List;
@@ -71,8 +71,13 @@ public class Order  {
 
 
 
-        OrderCanceld orderCanceld = new OrderCanceld(this);
-        orderCanceld.publishAfterCommit();
+        OrderCanceled orderCanceled = new OrderCanceled(this);
+        orderCanceled.publishAfterCommit();
+
+        // Get request from FoodCooking
+        //food.delivery.external.FoodCooking foodCooking =
+        //    Application.applicationContext.getBean(food.delivery.external.FoodCookingService.class)
+        //    .getFoodCooking(/** mapping value needed */);
 
     }
 
