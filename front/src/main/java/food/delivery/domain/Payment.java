@@ -24,6 +24,24 @@ public class Payment  {
     
     
     private Long id;
+    
+    
+    
+    
+    
+    private String orderId;
+    
+    
+    
+    
+    
+    private String amount;
+    
+    
+    
+    
+    
+    private String status;
 
     @PostPersist
     public void onPostPersist(){
